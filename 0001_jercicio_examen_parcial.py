@@ -10,7 +10,8 @@ USER_DATABASE = {
 # Revisa si el usuario existe y si la contraseña es correcta
 def check_credentials(username, password):
     user = USER_DATABASE.get(username)
-    return user and user["password"] == password
+    result = user and user["password"] == password
+    return result
 
 # Obtiene el nivel de acceso del usuario
 def get_access_level(username):
@@ -31,7 +32,7 @@ def grant_access(role):
 def access_control(username, password):
     if check_credentials(username, password):
         level = get_access_level(username)
-        grant_access(level)
+        return grant_access(level)
     else:
         return "Access denied: Invalid credentials."
 
@@ -42,7 +43,8 @@ def login_with_retries(max_attemps = 3):
         username = input("Enter username: ")
         password = input("Enter password: ")
         if check_credentials(username, password):
-            access_control(username, password)
+            a_control = access_control(username, password)
+            print(a_control)
             return
         else:
             attempts += 1
@@ -50,7 +52,6 @@ def login_with_retries(max_attemps = 3):
     print(f"Attempt {attempts} of {max_attemps}.")
 
 
-    # Ejecutar
-if __name__ == "__main__":
-    login_with_retries()
+# Ejecutar
+login_with_retries(3)
         
